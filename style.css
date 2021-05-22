@@ -1,0 +1,57 @@
+:root {
+    --main-bg-color: #eff5fe;
+    --border-color: #0288d147;
+}
+
+body ,html {
+    font-family: system-ui;
+    background: var(--main-bg-color);
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body, .drop-zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.upload-container{
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0px 20px 20px #0000002e;
+}
+
+.drop-zone {
+    width: 500px;
+    min-height: 200px;
+    border: 2px dashed var(--border-color);
+    margin: 30px;
+    border-radius: 5px;
+}
+
+.icon-container {
+    width: 75px;
+    height: 100px;
+    position: relative;
+}
+
+.icon-container img {
+    width: 75px;
+    position: absolute;
+    transform-origin: bottom;
+}
+
+.icon-container .center {
+    z-index: 2;
+}
+
+.icon-container .right {
+    transform: rotate(10deg) translateX(20px);
+}
+
+.icon-container .left {
+    transform: rotate(-10deg) translateX(-20px);
+}
