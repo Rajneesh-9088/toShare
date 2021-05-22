@@ -42,16 +42,27 @@ body, .drop-zone {
     width: 75px;
     position: absolute;
     transform-origin: bottom;
+    transition: tranform 250ms ease-in-out;
 }
 
 .icon-container .center {
     z-index: 2;
 }
 
-.icon-container .right {
-    transform: rotate(10deg) translateX(20px);
+.icon-container .right,
+.icon-container .left {
+    filter: grayscale(0.5);
+    transform: (0.9);
 }
 
-.icon-container .left {
-    transform: rotate(-10deg) translateX(-20px);
+.dragged .icon-container .right {
+    transform: rotate(10deg) translateX(20px) scale(0.9);
+}
+
+ .dragged .icon-container .left {
+    transform: rotate(-10deg) translateX(-20px) scale(0.9);
+}
+
+.dragged .icon-container .center {
+    transform: translateY(-5);
 }
