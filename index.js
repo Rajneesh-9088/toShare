@@ -1,6 +1,7 @@
 const dropZone = document.querySelector(".drop-zone");
 const browseBtn = document.querySelector(".browseBtn");
 const fileInput = document.querySelector("#fileInput");
+const bgProgress = document.querySelector(".bg-progress");
 
 const host = "https://innshare.herokuapp.com";
 const uploadUrl = `${host}/api/files`;
@@ -46,7 +47,17 @@ const uploadFile  = () => {
            console.log(xhr.response)
        }
     };
+    
+    xhr.upload.onprogress = 
 
     xhr.open("POST", uploadUrl);
     xhr.send(formData);
 }
+
+const updatedProgress = (e) => {
+  const percent = Math.round(e.loaded/e.total*100);
+  console.log(percent);
+  bgProgress.style.width = `${percent}%`;
+  
+}
+
