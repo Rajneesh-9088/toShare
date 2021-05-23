@@ -27,9 +27,15 @@ body, .drop-zone {
 .drop-zone {
     width: 500px;
     min-height: 200px;
-    border: 2px dashed var(--border-color);
+    border: 3px dashed var(--border-color);
     margin: 30px;
-    border-radius: 5px;
+    border-radius: 10px;
+    transition: all .2s ease;
+}
+
+.dragged.drop-zone {
+    background: var(--main-bg-color);
+    border-color: #2196f3;
 }
 
 .icon-container {
@@ -65,4 +71,14 @@ body, .drop-zone {
 
 .dragged .icon-container .center {
     transform: translateY(-5);
+}
+
+#fileInput{
+    display: none;
+
+}
+
+.browseBtn{
+    color:  #2196f3;
+    cursor: pointer;
 }
