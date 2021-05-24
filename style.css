@@ -91,7 +91,7 @@ body, .drop-zone, .upload-container {
    margin-bottom: 25px;
    border-radius: 10px;
    position: relative;
-   display: none;
+   /* display: none; */
 
 }
 
@@ -132,12 +132,20 @@ body, .drop-zone, .upload-container {
 
 .sharing-container{
     width: var(--container-width);
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    /* display: none; */
+}
+
+p.expire {
+    opacity: .7;
+    text-align: center;
 }
 
 .sharing-container .input-container{
     position: relative;
 }
+
+
 
 .sharing-container .input-container input{
     width: 100%;
@@ -156,5 +164,7 @@ body, .drop-zone, .upload-container {
     width: 30px;
     right: 7px;
     top : 12px;
+    background: #f7fdf4;
+    cursor: pointer;
 }
 

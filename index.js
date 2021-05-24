@@ -7,7 +7,9 @@ const bgProgress = document.querySelector(".bg-progress");
 const progressBar = document.querySelector("progress-bar");
 const percentDiv = document.querySelector("#percent");
 
-
+const sharingContainer = document.querySelector(".sharing-container");
+const fileUrlInput = document.querySelector("#fileUrl");
+const copyBtn = document.querySelector("#copyBtn");
 
 const host = "https://innshare.herokuapp.com";
 const uploadUrl = `${host}/api/files`;
@@ -34,46 +36,52 @@ dropZone.addEventListener("drop", (e) => {
   }
 });
 
-fileInput.addEventListener("change", ()=>{
-     uploadFile();
-}) 
+fileInput.addEventListener("change", () => {
+  uploadFile();
+});
 
 browseBtn.addEventListener("click", (e) => {
   fileInput.click();
 });
 
-const uploadFile  = () => {
-    progressContainer.style.display = "block";
-    const file = fileInput.files[0];
-    const formData = new FormData();
-    formData.append("myfile",file);
+copyBtn.addEventListener("click",() =>{
+   fileUrlInput.select();
+   document.execCommand("copy");
+})
 
-    const xhr = new XMLHttpRequest();
+const uploadFile = () => {
+  progressContainer.style.display = "block";
+  const file = fileInput.files[0];
+  const formData = new FormData();
+  formData.append("myfile", file);
 
-    // 
-    xhr.onreadystatechange = () => {
-       if(xhr.readyState=== XMLHttpRequest.DONE) {
-           console.log(xhr.response);
-           showLink(JSON.parse(xhr.response));
-       }
-    };
-    
-    xhr.upload.onprogress = 
+  const xhr = new XMLHttpRequest();
 
-    xhr.open("POST", uploadUrl);
-    xhr.send(formData);
-}
+  //
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      console.log(xhr.response);
+      showLink(JSON.parse(xhr.response));
+    }
+  };
+
+  xhr.upload.onprogress = xhr.open("POST", uploadUrl);
+  xhr.send(formData);
+};
 
 const updatedProgress = (e) => {
-  const percent = Math.round(e.loaded/e.total*100);
+  const percent = Math.round((e.loaded / e.total) * 100);
   console.log(percent);
   bgProgress.style.width = `${percent}%`;
   percent.innerText = percent;
-  progressBar.style.transform = `scaleX(${percent/100})`
+  progressBar.style.transform = `scaleX(${percent / 100})`;
+};
 
-}
+const showLink = ({ file: url }) => {
+  console.log(url);
+  progressContainer.style.display = "none";
+  sharingContainer.style.display = "block";
+  fileUrlInput.value = url;
+};
 
-const showLink = ({file}) =>{
-    console.log(file);
-    progressContainer.style.display = "none";
-}
+
