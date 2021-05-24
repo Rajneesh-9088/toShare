@@ -17,12 +17,14 @@ body, .drop-zone, .upload-container {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    
 }
 
 .upload-container{
     background: #ffffff;
     border-radius: 20px;
     box-shadow: 0px 20px 20px #0000002e;
+   
 }
 
 .drop-zone {
@@ -136,9 +138,9 @@ body, .drop-zone, .upload-container {
     /* display: none; */
 }
 
-p.expire {
+p {
     opacity: .7;
-    text-align: center;
+    text-align: center;;
 }
 
 .sharing-container .input-container{
@@ -167,4 +169,54 @@ p.expire {
     background: #f7fdf4;
     cursor: pointer;
 }
+
+.email-container{
+    display: flex;
+    align-items: center;
+  
+}
+
+.email-container form {
+    width: 100%;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.email-container .field{
+     display: flex;
+     justify-content: space-between;
+     margin-bottom: 5px;
+     width: 400px;
+}
+
+.email-container lable{
+    font-size: 18px;
+}
+
+.email-container input{
+    font-size: 18px;
+    border: none;
+    border-bottom: 2px solid  var(--border-color);
+    text-align: center;
+
+}
+
+.email-container input:focus {
+    outline: none;
+}
+  
+.email-container button{
+     font-size: 18px;
+     padding: 8px 40px;
+     margin-top: 15px;
+     background: var(--main-bg-color);
+     border: none;
+     border: 5px;
+     color: #607d8b;
+     cursor: pointer;
+}    
 
