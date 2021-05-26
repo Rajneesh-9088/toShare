@@ -99,7 +99,7 @@ body{
    margin-bottom: 25px;
    border-radius: 10px;
    position: relative;
-   /* display: none; */
+   display: none;
 
 }
 
@@ -141,7 +141,7 @@ body{
 .sharing-container{
     width: var(--container-width);
     margin-bottom: 20px;
-    /* display: none; */
+    display: none;
 }
 
 p {
@@ -246,7 +246,14 @@ p {
     height: 50vh;
     width: 50vw;
 }
-
+.logo {
+    position: absolute;
+    top: 2px;
+    left: 3px;
+    width: 50px;
+   border-radius: 5px;
+    
+}
 @media screen and (max-width: 900px) {
     :root{
         --container-width: 320px;
