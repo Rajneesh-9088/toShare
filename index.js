@@ -11,8 +11,11 @@ const sharingContainer = document.querySelector(".sharing-container");
 const fileUrlInput = document.querySelector("#fileUrl");
 const copyBtn = document.querySelector("#copyBtn");
 
+const emailForm = document.querySelector("#emailForm");
+
 const host = "https://innshare.herokuapp.com";
 const uploadUrl = `${host}/api/files`;
+const emailUrl = `${host}/api/files/send`;
 
 dropZone.addEventListener("dragover", (e) => {
   e.preventDefault();
@@ -44,13 +47,14 @@ browseBtn.addEventListener("click", (e) => {
   fileInput.click();
 });
 
-copyBtn.addEventListener("click",() =>{
-   fileUrlInput.select();
-   document.execCommand("copy");
-})
+copyBtn.addEventListener("click", () => {
+  fileUrlInput.select();
+  document.execCommand("copy");
+});
 
 const uploadFile = () => {
   progressContainer.style.display = "block";
+  
   const file = fileInput.files[0];
   const formData = new FormData();
   formData.append("myfile", file);
@@ -61,7 +65,7 @@ const uploadFile = () => {
   xhr.onreadystatechange = () => {
     if (xhr.readyState === XMLHttpRequest.DONE) {
       console.log(xhr.response);
-      showLink(JSON.parse(xhr.response));
+      onUploadSuccess(JSON.parse(xhr.response));
     }
   };
 
@@ -77,11 +81,41 @@ const updatedProgress = (e) => {
   progressBar.style.transform = `scaleX(${percent / 100})`;
 };
 
-const showLink = ({ file: url }) => {
+const onUploadSuccess = ({ file: url }) => {
   console.log(url);
+  fileInput.value = "";
+  emailForm[2].removeAttribute("disabled");
   progressContainer.style.display = "none";
   sharingContainer.style.display = "block";
   fileUrlInput.value = url;
 };
 
+emailForm.addEventListener("submit", (e) => {
+  e.preventDefault();
 
+  console.log("submit clicked ");
+
+  const url = fileUrlInput.value;
+  const formData = {
+    uuid: url.split("/").splice(-1, 1)[0],
+    emailTo: emailForm.elements["to-email"].value,
+    emailFrom: emailForm.elements["from-email"].value,
+  };
+
+  emailForm[2].setAttribute("disabled", "true");
+  console.table(formData);
+
+  fetch(emailUrl, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((res) => res.json())
+    .then(({ success }) => {
+      if (success) {
+        sharingContainer.style.display = "none";
+      }
+    });
+});
