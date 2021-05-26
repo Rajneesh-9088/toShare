@@ -245,11 +245,16 @@ p {
 }
 .logo {
   position: absolute;
-  top: 2px;
-  left: 3px;
-  width: 50px;
-  border-radius: 5px;
+  top: -4px;
+  left: 0px;
+  width: 71px;
+  padding: 2px 1px 6px 1px;
+  border-radius: 63px;
+  background: var(--main-bg-color) fixed no-repeat;
+  
+  
 }
+
 @media screen and (max-width: 900px) {
   :root {
     --container-width: 320px;
