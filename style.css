@@ -10,6 +10,8 @@ body ,html {
     height: 100%;
     padding: 0;
     margin: 0;
+    overflow: hidden;
+    
 }
 
 body, .drop-zone, .upload-container {
@@ -18,6 +20,10 @@ body, .drop-zone, .upload-container {
     justify-content: center;
     flex-direction: column;
     
+}
+
+body{
+    flex-direction: row;
 }
 
 .upload-container{
@@ -93,7 +99,7 @@ body, .drop-zone, .upload-container {
    margin-bottom: 25px;
    border-radius: 10px;
    position: relative;
-   /* display: none; */
+   display: none;
 
 }
 
@@ -135,7 +141,7 @@ body, .drop-zone, .upload-container {
 .sharing-container{
     width: var(--container-width);
     margin-bottom: 20px;
-    /* display: none; */
+    display: none;
 }
 
 p {
@@ -220,3 +226,23 @@ p {
      cursor: pointer;
 }    
 
+.toast{
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translate(-50%, 60px);
+    padding: 10px 20px;
+    border-radius: 5px;
+    background: #03a9fa;
+    color: #fff;
+    font-size: 18px;
+    transition: transform ease-in-out .2s;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.upload-vector {
+    background: url(./upload.svg) no-repeat center;
+    background-size: contain;
+    height: 50vh;
+    width: 50vw;
+}

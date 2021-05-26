@@ -12,6 +12,7 @@ const fileUrlInput = document.querySelector("#fileUrl");
 const copyBtn = document.querySelector("#copyBtn");
 
 const emailForm = document.querySelector("#emailForm");
+const toast = document.querySelector(".toast");
 
 const host = "https://innshare.herokuapp.com";
 const uploadUrl = `${host}/api/files`;
@@ -50,11 +51,12 @@ browseBtn.addEventListener("click", (e) => {
 copyBtn.addEventListener("click", () => {
   fileUrlInput.select();
   document.execCommand("copy");
+  showToast("Linkd copied");
 });
 
 const uploadFile = () => {
   progressContainer.style.display = "block";
-  
+
   const file = fileInput.files[0];
   const formData = new FormData();
   formData.append("myfile", file);
@@ -67,6 +69,11 @@ const uploadFile = () => {
       console.log(xhr.response);
       onUploadSuccess(JSON.parse(xhr.response));
     }
+  };
+  xhr.upload.onprogress = updatedProgress;
+  xhr.upload.onerror = () => {
+    fileInput.value = "";
+    showToast(`Error in upload ${xhr.statusText}`);
   };
 
   xhr.upload.onprogress = xhr.open("POST", uploadUrl);
@@ -116,6 +123,17 @@ emailForm.addEventListener("submit", (e) => {
     .then(({ success }) => {
       if (success) {
         sharingContainer.style.display = "none";
+        showToast("Email Sent");
       }
     });
 });
+
+let toastTimer;
+const showToast = (msg) => {
+  toast.innerText = msg;
+  toast.style.transform = "translate(-50%,0)";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.style.transform = "translate(-50%,60px)";
+  }, 2000);
+};
