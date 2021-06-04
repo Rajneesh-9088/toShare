@@ -3,7 +3,8 @@ const multer = require("multer");
 const path = require("path");
 const File = require("../models/file");
 const { v4: uuid4 } = require("uuid");
- 
+const SendmailTransport = require("nodemailer/lib/sendmail-transport");
+
 let storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "uploads/"),
 
@@ -22,10 +23,9 @@ let upload = multer({
 }).single("myfile");
 
 router.post("/", (req, res) => {
-
   // store files
   upload(req, res, async (err) => {
-      // validate request
+    // validate request
     if (!req.file) {
       return res.json({ error: "All fields are required!" });
     }
@@ -53,9 +53,41 @@ router.post("/", (req, res) => {
   // send response
 });
 
+router.post("/send", async (req, res) => {
+  
+  // validate request
+  const { uuid, emailTo, emailFrom } = req.body;
+   
+  if (!uuid || !emailTo || !emailFrom) {
+    return res.status(422).send({ error: "All fields are required" });
+  }
 
-// router.post('/', ( req,res) => {
-//    res.send("hey response is comming ");
-// })
+  const file = await File.findOne({ uuid: uuid });
+  if (file.sender) {
+    return res.status(422).send({ error: "Email already send !" });
+  }
+
+  file.sender = emailFrom;
+  file.receiver = emailTo;
+  const response = await file.save();
+
+  // Send Email
+  const sendMail = require("../services/emailService");
+  sendMail({
+    from: emailFrom,
+    to: emailTo,
+    subject: "toShare file sharing",
+    text: `${emailFrom} shared a file with you`,
+    html: require("../services/emailTemplate")({
+      emailFrom: emailFrom,
+      downloadLink: `${process.env.APP_BASE_URL}/files/${file.uuid}`,
+      size: parseInt(file.size / 1000) + "KB",
+      expires: "24 hours",
+    }),
+  });
+
+  return res.send({success: true});
+
+});
 
 module.exports = router;
